@@ -1,0 +1,50 @@
+<ng-container *ngIf='usuario !== null'>
+    <ion-header>
+        <ion-toolbar align='center' color='elemento'>
+            <ion-title>
+                Juego Kinetico
+            </ion-title>
+        </ion-toolbar>
+    </ion-header>
+    <ion-content color='fondo'>
+        <div style='display: block; height: 95%;'>
+            <ng-container *ngIf='flagSecc === "resultados"'>
+                <ion-card *ngFor='let u of listadoResultados; let i = index' color='elemento' style='padding: auto 10px;'>
+                    <ion-card-content>
+                        <ion-label>
+                            PUESTO: {{i + 1}} <br>
+                            JUGADOR: {{u.jugador}} <br>
+                            MEJOR TIEMPO: {{u.mejorPuntaje}}seg
+                        </ion-label>
+                    </ion-card-content>
+                </ion-card>
+                <div style='position: absolute; top:87%; width:100%'>
+                    <ion-button color='elemento' expand='block' (click)='jugar()'>Jugar</ion-button>
+                </div>
+            </ng-container>
+            <ng-container *ngIf='flagSecc === "seleccPersonaje"'>
+                <div class='contenido' style="text-align: center; margin-top: 25px;">
+                    <div style="margin: 10px auto;">
+                        <img src="../../assets/images/dc.png" height=200px width=200px (click)="elegirPersonaje('dc')">
+                    </div>
+                    <div style="margin: 10px auto;">
+                        <img src="../../assets/images/marvel.png" height=200px width=200px (click)="elegirPersonaje('marvel')">
+                    </div>
+                </div>
+            </ng-container>
+            <ng-container *ngIf='flagSecc === "Juego"'>
+                <p style="position: fixed; margin:auto 10px; padding: auto 10px; background-color: black; color: cornsilk; width: 95%;">Time: {{timeLeft}}</p>
+                <div #heroe id="heroe" class="posicion">
+                    <img style="width: 125px;" src="../../assets/images/batman.png" *ngIf="eleccion === 'dc'">
+                    <img style="width: 125px;" src="../../assets/images/cptAmerica.png" *ngIf="eleccion === 'marvel'">
+                </div>
+            </ng-container>
+        </div>
+    </ion-content>
+    <ion-footer>
+        <ion-toolbar color="fondo">
+            <ion-button *ngIf='flagSecc === "resultados"' color='danger' expand='block' (click)='cerrarSesion()'>Cerrar Sesion</ion-button>
+            <ion-button *ngIf='flagSecc === "Juego"' [disabled]='juegoProcc' color='elemento' expand='block' (click)='Iniciar()'>Iniciar Juego</ion-button>
+        </ion-toolbar>
+    </ion-footer>
+</ng-container>
