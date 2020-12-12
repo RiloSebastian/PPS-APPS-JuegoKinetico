@@ -1,8 +1,8 @@
-<ng-container *ngIf='usuario !== null'>
+<ng-container *ngIf='!splash'>
     <ion-header>
         <ion-toolbar align='center' color='elemento'>
             <ion-title>
-                Juego Kinetico
+                {{usuario.email}}
             </ion-title>
         </ion-toolbar>
     </ion-header>
@@ -48,3 +48,4 @@
         </ion-toolbar>
     </ion-footer>
 </ng-container>
+ <img *ngIf='splash' class='spinnerA' src="../../assets/logoMov.png">

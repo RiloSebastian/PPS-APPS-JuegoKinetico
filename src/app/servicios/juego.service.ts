@@ -9,7 +9,7 @@ export class JuegoService {
   constructor(private firestore: AngularFirestore) { }
 
   public traerTodos(){
-  	return this.firestore.collection('juegoMovKinetico').doc('subcolecciones').collection('juegos').snapshotChanges();
+  	return this.firestore.collection('juegoMovKinetico').doc('subcolecciones').collection('juegos',ref => ref.orderBy('mejorPuntaje','desc')).snapshotChanges();
   }
 
   public guardar(jugador: any, tiempo: number){

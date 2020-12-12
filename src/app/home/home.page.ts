@@ -12,6 +12,7 @@ import Swal from 'sweetalert2';
 	styleUrls: ['home.page.scss'],
 })
 export class HomePage {
+	public splash: boolean = true;
 	public listadoResultados: Array<any> = [];
 	public usuario: any = null;
 	public subU: any = null;
@@ -28,17 +29,19 @@ export class HomePage {
 
 	constructor(private router: Router, private auth: AuthService, private comp: ComplementosService, private motion: DeviceMotion, private juego: JuegoService) {
 		console.log('accede a usuario');
+		this.splash= true;
 		this.subU = this.auth.usuario.subscribe(user => {
 			if (user !== null) {
 				this.usuario = user;
 				this.flagSecc = 'resultados';
 				console.log(this.usuario);
+				this.splash = false;
 				this.subJuegos = this.juego.traerTodos().subscribe(ref => {
 					this.listadoResultados = ref.map(y => {
 						const x: any = y.payload.doc.data() as any;
 						x['id'] = y.payload.doc.id;
 						return { ...x };
-					}).sort((a, b) => (a.mejorPuntaje > b.mejorPuntaje) ? 1 : ((b.mejorPuntaje > a.mejorPuntaje) ? -1 : 0)).slice(0, 2);
+					}).slice(0, 3);
 				})
 			}
 		});
@@ -80,7 +83,9 @@ export class HomePage {
 		this.pauseTimer();
 		this.juegoProcc = false;
 		this.deviceSubscription.unsubscribe();
+		this.splash = true;
 		this.juego.guardar(this.usuario, this.timeLeft).then(resp => {
+			this.splash = false;
 			return Swal.fire({
 				title: 'Juego terminado! ',
 				icon: 'success',
